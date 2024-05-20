@@ -25,7 +25,7 @@ class Category(models.Model):
         k = self.parent
         while k is not None:
             full_path.append(k.name)
-            k = k.parrent
+            k = k.parent
         return ' > '.join(full_path[::-1])
 
     # def save(self, *args, **kwargs):
@@ -57,12 +57,12 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('model_detail', kwargs={'pk': self.pk})
+        return reverse('shop:product_detail', args=[str(self.slug)])
 
 
 class ProductManager(models.Manager):
     def get_queryset(self):
-        return super(ProductManager, self).get_queryset().filter(aviable=True)
+        return super(ProductManager, self).get_queryset().filter(available=True)
 
 
 class ProductProxy(Product):
